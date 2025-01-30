@@ -48,4 +48,8 @@ public class ProductService {
         }
         productRepository.delete(product.get());
     }
+
+    public List<Product> searchProducts(String keyword) {
+        return productRepository.searchProducts(keyword);
+    }
 }
