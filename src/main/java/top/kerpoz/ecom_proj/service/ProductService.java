@@ -43,10 +43,11 @@ public class ProductService {
 
     public void deleteProduct(int prodId) {
         Optional<Product> product = productRepository.findById(prodId);
-        if (!product.isPresent()) {
+        if (product.isPresent()) {
+            productRepository.delete(product.get());
+        } else {
             throw new ProductNotFoundException("Product with ID " + prodId + " not found.");
         }
-        productRepository.delete(product.get());
     }
 
     public List<Product> searchProducts(String keyword) {
