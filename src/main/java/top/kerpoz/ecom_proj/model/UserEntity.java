@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "app_user")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,6 +26,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
+    @Column(unique = true)
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
