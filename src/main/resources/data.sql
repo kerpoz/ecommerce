@@ -16,3 +16,14 @@ VALUES
 -- Fashion
 ('Nike Air Max 270 Sneakers', 'Comfortable and stylish sneakers with responsive cushioning for all-day wear.', 149.99, 'Fashion', '2025-01-08', true, 30, 'Nike', 'nike_airmax270.jpg', 'image/jpeg', NULL),
 ('Ray-Ban Aviator Sunglasses', 'Classic aviator sunglasses with polarized lenses for superior UV protection.', 199.99, 'Fashion', '2025-01-05', true, 50, 'Ray-Ban', 'rayban_aviator.jpg', 'image/jpeg', NULL);
+
+-- user authentication
+-- decrypted password = testPassword
+INSERT INTO app_user (id, email, password, username)
+VALUES (1, 'test@email.com', '$2a$12$lY34bHWavs0mQ3kZo9Gt4OK0NPTNryrhnylop1pyPW0sUtlzkFHhS', 'testUsername');
+
+INSERT INTO role (id, name)
+VALUES (1, 'USER');
+
+INSERT INTO user_role (user_id, role_id)
+VALUES (1, 1);

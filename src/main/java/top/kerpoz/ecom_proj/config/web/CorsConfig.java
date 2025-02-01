@@ -1,4 +1,4 @@
-package top.kerpoz.ecom_proj.config;
+package top.kerpoz.ecom_proj.config.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

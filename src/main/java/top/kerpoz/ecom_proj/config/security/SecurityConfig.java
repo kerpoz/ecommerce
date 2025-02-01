@@ -1,4 +1,4 @@
-package top.kerpoz.ecom_proj.config;
+package top.kerpoz.ecom_proj.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
