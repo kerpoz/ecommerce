@@ -1,5 +1,6 @@
 package top.kerpoz.ecom_proj.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.kerpoz.ecom_proj.exception.ProductNotFoundException;
@@ -15,6 +16,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    @Autowired
     ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
@@ -43,10 +45,11 @@ public class ProductService {
 
     public void deleteProduct(int prodId) {
         Optional<Product> product = productRepository.findById(prodId);
-        if (!product.isPresent()) {
+        if (product.isPresent()) {
+            productRepository.delete(product.get());
+        } else {
             throw new ProductNotFoundException("Product with ID " + prodId + " not found.");
         }
-        productRepository.delete(product.get());
     }
 
     public List<Product> searchProducts(String keyword) {
