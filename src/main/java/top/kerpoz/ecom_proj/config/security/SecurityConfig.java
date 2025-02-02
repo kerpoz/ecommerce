@@ -1,5 +1,6 @@
 package top.kerpoz.ecom_proj.config.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,11 +19,21 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    @Value("${csrf.enabled}")  // Inject the property value
+    private boolean csrfEnabled;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        if (csrfEnabled) {
+            // Enable CSRF protection if the property is true
+            http.csrf(Customizer.withDefaults());
+        } else {
+            // Disable CSRF protection if the property is false
+            http.csrf(AbstractHttpConfigurer::disable);
+        }
+
         return http
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
