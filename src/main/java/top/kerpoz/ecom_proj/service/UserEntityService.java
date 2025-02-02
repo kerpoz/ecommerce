@@ -1,6 +1,9 @@
 package top.kerpoz.ecom_proj.service;
 
 import jakarta.transaction.Transactional;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import top.kerpoz.ecom_proj.model.UserEntity;
@@ -12,10 +15,14 @@ import java.util.Optional;
 public class UserEntityService {
     private final UserEntityRepository userEntityRepository;
     private final PasswordEncoder passwordEncoder; // Injected PasswordEncoder
+    private final AuthenticationManager authManager; // Injected AuthenticationManager
+    private final JWTService jwtService; // Injected JWTService
 
-    public UserEntityService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder) {
+    public UserEntityService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder, AuthenticationManager authManager, JWTService jwtService) {
         this.userEntityRepository = userEntityRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authManager = authManager;
+        this.jwtService = jwtService;
     }
 
     @Transactional
@@ -26,5 +33,15 @@ public class UserEntityService {
 
     public Optional<UserEntity> findUserById(Long id) {
         return userEntityRepository.findById(id);
+    }
+
+    //TODO change method return type
+    public String verifyUser(UserEntity user) {
+        Authentication authentication =
+                authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        if (authentication.isAuthenticated())
+            return jwtService.generateToken();
+        else
+            return "Login failed";
     }
 }
