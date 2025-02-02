@@ -25,4 +25,9 @@ public class UserEntityController {
     public Optional<UserEntity> getUserById(@PathVariable Long userId) {
         return userService.findUserById(userId);
     }
+
+    @PostMapping("/login")
+    public String login(@RequestBody UserEntity user) {
+        return "Success";
+    }
 }
