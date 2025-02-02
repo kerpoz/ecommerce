@@ -1,5 +1,6 @@
 package top.kerpoz.ecom_proj.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class UserEntity {
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
