@@ -19,8 +19,8 @@ VALUES
 
 -- user authentication
 -- decrypted password = testPassword
-INSERT INTO app_user (id, email, password, username)
-VALUES (1, 'test@email.com', '$2a$12$lY34bHWavs0mQ3kZo9Gt4OK0NPTNryrhnylop1pyPW0sUtlzkFHhS', 'testUsername');
+INSERT INTO app_user (email, password, username)
+VALUES ('test@email.com', '$2a$12$lY34bHWavs0mQ3kZo9Gt4OK0NPTNryrhnylop1pyPW0sUtlzkFHhS', 'testUsername');
 
 INSERT INTO role (id, name)
 VALUES (1, 'USER');
