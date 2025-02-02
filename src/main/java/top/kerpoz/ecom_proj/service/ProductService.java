@@ -1,6 +1,5 @@
 package top.kerpoz.ecom_proj.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.kerpoz.ecom_proj.exception.ProductNotFoundException;
@@ -16,7 +15,6 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    @Autowired
     ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
