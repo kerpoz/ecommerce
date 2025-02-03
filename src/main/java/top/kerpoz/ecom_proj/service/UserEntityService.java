@@ -16,9 +16,9 @@ public class UserEntityService {
     private final UserEntityRepository userEntityRepository;
     private final PasswordEncoder passwordEncoder; // Injected PasswordEncoder
     private final AuthenticationManager authManager; // Injected AuthenticationManager
-    private final JWTService jwtService; // Injected JWTService
+    private final JwtService jwtService; // Injected JwtService
 
-    public UserEntityService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder, AuthenticationManager authManager, JWTService jwtService) {
+    public UserEntityService(UserEntityRepository userEntityRepository, PasswordEncoder passwordEncoder, AuthenticationManager authManager, JwtService jwtService) {
         this.userEntityRepository = userEntityRepository;
         this.passwordEncoder = passwordEncoder;
         this.authManager = authManager;

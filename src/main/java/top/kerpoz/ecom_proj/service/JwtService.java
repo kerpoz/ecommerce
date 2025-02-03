@@ -4,6 +4,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -14,7 +15,7 @@ import java.util.Map;
 
 @Getter
 @Service
-public class JWTService {
+public class JwtService {
 
     private final SecretKey secretKey;
 
@@ -32,8 +33,16 @@ public class JWTService {
                 .compact();
     }
 
-    public JWTService(@Value("${jwt.secret}") String secret) {
+    public JwtService(@Value("${jwt.secret}") String secret) {
         byte[] keyBytes = Base64.getDecoder().decode(secret);
         this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public String extractUsername(String token) {
+        return "";
+    }
+
+    public boolean validateToken(String token, UserDetails customUserDetails) {
+        return true;
     }
 }
