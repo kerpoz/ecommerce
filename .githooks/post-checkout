@@ -3,4 +3,6 @@
 echo "Running post-checkout hook"
 
 # Run set-profile.sh to set the correct profile based on the branch
-./set-profile.sh
+
+#TODO uncomment to enable automatic profile setting, but firstly need to fix the issue with the script, it might be helpful "chmod +x set-profile.sh"
+#./set-profile.sh

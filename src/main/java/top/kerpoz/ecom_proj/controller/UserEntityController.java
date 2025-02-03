@@ -10,24 +10,24 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 public class UserEntityController {
 
-    private final UserEntityService userService;
+    private final UserEntityService userEntityService;
 
-    public UserEntityController(UserEntityService userService) {
-        this.userService = userService;
+    public UserEntityController(UserEntityService userEntityService) {
+        this.userEntityService = userEntityService;
     }
 
     @PostMapping("/register")
     public void register(@RequestBody UserEntity user) {
-        userService.register(user);
+        userEntityService.register(user);
     }
 
     @GetMapping("/{userId}")
     public Optional<UserEntity> getUserById(@PathVariable Long userId) {
-        return userService.findUserById(userId);
+        return userEntityService.findUserById(userId);
     }
 
     @PostMapping("/login")
     public String login(@RequestBody UserEntity user) {
-        return userService.verifyUser(user);
+        return userEntityService.verifyUser(user);
     }
 }

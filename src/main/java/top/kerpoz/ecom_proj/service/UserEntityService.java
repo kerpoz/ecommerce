@@ -30,6 +30,7 @@ public class UserEntityService {
         this.jwtService = jwtService;
     }
 
+    //TODO figure out role assignment for registering users
     @Transactional
     public void register(UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword())); // Encode the password
