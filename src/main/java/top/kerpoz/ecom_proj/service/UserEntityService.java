@@ -37,11 +37,14 @@ public class UserEntityService {
 
     //TODO change method return type
     public String verifyUser(UserEntity user) {
-        Authentication authentication =
-                authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        if (authentication.isAuthenticated())
+        Optional<UserEntity> optionalUser = userEntityRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
+
+        if (optionalUser.isPresent()) {
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(optionalUser.get().getUsername(), user.getPassword())
+            );
             return jwtService.generateToken();
-        else
-            return "Login failed";
+        }
+        return "Login failed";
     }
 }
