@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Running set=profile.sh script"
+
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$BRANCH" == "main" ]; then
