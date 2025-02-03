@@ -2,6 +2,7 @@ package top.kerpoz.ecom_proj.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,15 +37,29 @@ public class UserEntityService {
     }
 
     public String verifyUser(UserEntity user) {
-        Optional<UserEntity> optionalUser = userEntityRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
-
-        if (optionalUser.isPresent()) {
-            String optionalUserUsername = optionalUser.get().getUsername();
-            Authentication authentication = authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(optionalUserUsername, user.getPassword())
-            );
-            return jwtService.generateToken(optionalUserUsername);
+        // Validate input
+        if (user.getUsername() == null && user.getEmail() == null) {
+            throw new IllegalArgumentException("Username or email must be provided");
         }
-        return "Login failed";
+
+        // Attempt to find the user by username or email
+        UserEntity foundUser = userEntityRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail())
+                .orElseThrow(() -> new BadCredentialsException("User not found"));
+
+        // Authenticate using username and password
+        try {
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(foundUser.getUsername(), user.getPassword()));
+
+            // If authentication is successful, generate the token
+            if (authentication.isAuthenticated()) {
+                return jwtService.generateToken(foundUser.getUsername());
+            }
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Incorrect password"); // Specific message for wrong password
+        }
+
+        // This line should not be reached, but just in case:
+        throw new BadCredentialsException("Login failed");
     }
 }
