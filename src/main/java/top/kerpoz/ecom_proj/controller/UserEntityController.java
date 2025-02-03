@@ -28,6 +28,6 @@ public class UserEntityController {
 
     @PostMapping("/login")
     public String login(@RequestBody UserEntity user) {
-        return "Success";
+        return userService.verifyUser(user);
     }
 }
