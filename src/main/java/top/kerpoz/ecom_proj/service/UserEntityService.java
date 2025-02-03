@@ -35,15 +35,15 @@ public class UserEntityService {
         return userEntityRepository.findById(id);
     }
 
-    //TODO change method return type
     public String verifyUser(UserEntity user) {
         Optional<UserEntity> optionalUser = userEntityRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
 
         if (optionalUser.isPresent()) {
+            String optionalUserUsername = optionalUser.get().getUsername();
             Authentication authentication = authManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(optionalUser.get().getUsername(), user.getPassword())
+                    new UsernamePasswordAuthenticationToken(optionalUserUsername, user.getPassword())
             );
-            return jwtService.generateToken();
+            return jwtService.generateToken(optionalUserUsername);
         }
         return "Login failed";
     }
