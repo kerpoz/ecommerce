@@ -1,4 +1,6 @@
 #!/bin/bash
 
+echo "Running post-checkout hook"
+
 # Run set-profile.sh to set the correct profile based on the branch
-../set-profile.sh
+./set-profile.sh
