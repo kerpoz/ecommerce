@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Run set-profile.sh to set the correct profile based on the branch
+../set-profile.sh
