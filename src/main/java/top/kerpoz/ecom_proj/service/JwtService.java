@@ -1,5 +1,6 @@
 package top.kerpoz.ecom_proj.service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 @Getter
 @Service
@@ -19,8 +21,12 @@ public class JwtService {
 
     private final SecretKey secretKey;
 
-    public String generateToken(String userName) {
+    public JwtService(@Value("${jwt.secret}") String secret) {
+        byte[] keyBytes = Base64.getDecoder().decode(secret);
+        this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+    }
 
+    public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
         return Jwts.builder()
                 .claims()
@@ -33,16 +39,34 @@ public class JwtService {
                 .compact();
     }
 
-    public JwtService(@Value("${jwt.secret}") String secret) {
-        byte[] keyBytes = Base64.getDecoder().decode(secret);
-        this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+    public String extractUserName(String token) {
+        // extract the username from jwt token
+        return extractClaim(token, Claims::getSubject);
     }
 
-    public String extractUsername(String token) {
-        return "";
+    private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimResolver.apply(claims);
     }
 
-    public boolean validateToken(String token, UserDetails customUserDetails) {
-        return true;
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    public boolean validateToken(String token, UserDetails userDetails) {
+        final String userName = extractUserName(token);
+        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
     }
 }
