@@ -22,11 +22,9 @@ import top.kerpoz.ecom_proj.service.CustomUserDetailsService;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final CustomUserDetailsService customUserDetailsService;
     private final JwtFilter jwtFilter;
 
     public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtFilter jwtFilter) {
-        this.customUserDetailsService = customUserDetailsService;
         this.jwtFilter = jwtFilter;
     }
 
