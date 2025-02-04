@@ -1,5 +1,6 @@
 package top.kerpoz.ecom_proj.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import top.kerpoz.ecom_proj.model.UserEntity;
 import top.kerpoz.ecom_proj.service.UserEntityService;
@@ -17,7 +18,7 @@ public class UserEntityController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody UserEntity user) {
+    public void register(@Valid @RequestBody UserEntity user) {
         userEntityService.register(user);
     }
 
