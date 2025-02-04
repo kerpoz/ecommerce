@@ -36,4 +36,12 @@ public class GlobalExceptionHandler {
                 Map.of("error", "An unexpected error occurred. Please try again later.") // Generic message
         );
     }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<String> handleProductNotFound(ProductNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                .body(Map.of("error", e.getMessage(), "message", "Resource might not exist or has been deleted"));
+                .body(e.getMessage());
+    }
+
 }

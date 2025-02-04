@@ -45,7 +45,7 @@ public class UserEntityService {
         // Validate input
         if ((user.getUsername() == null || user.getUsername().trim().isEmpty()) &&
                 (user.getEmail() == null || user.getEmail().trim().isEmpty())) {
-            logger.warn("Login attempt without username and email");
+            logger.warn("Login attempt failed: both username and email are empty");
             throw new IllegalArgumentException("Username or email must be provided (input was empty)");
         }
 
