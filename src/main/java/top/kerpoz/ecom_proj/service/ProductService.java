@@ -8,14 +8,13 @@ import top.kerpoz.ecom_proj.repository.ProductRepository;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
 
     private final ProductRepository productRepository;
 
-    ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -23,31 +22,42 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> getProduct(int prodId) {
-        return productRepository.findById(prodId);
+    public Product getProduct(int prodId) {
+        return productRepository.findById(prodId)
+                .orElseThrow(() -> new ProductNotFoundException(prodId));
     }
 
     public Product addProduct(Product product, MultipartFile imageFile) throws IOException {
         product.setImageName(imageFile.getOriginalFilename());
         product.setImageType(imageFile.getContentType());
-        product.setImageDate(imageFile.getBytes());
+        product.setImageData(imageFile.getBytes());
         return productRepository.save(product);
     }
 
-    public Product updateProduct(int prodId, Product product, MultipartFile imageFile) throws IOException {
-        product.setImageDate(imageFile.getBytes());
-        product.setImageType(imageFile.getContentType());
-        product.setImageType(imageFile.getContentType());
-        return productRepository.save(product);
+    public Product updateProduct(int prodId, Product updatedProduct, MultipartFile imageFile) throws IOException {
+        // Fetch existing product or throw an exception if not found
+        Product existingProduct = productRepository.findById(prodId)
+                .orElseThrow(() -> new ProductNotFoundException(prodId));
+
+        // Update fields if new values are provided
+        existingProduct.setName(updatedProduct.getName());
+        existingProduct.setDescription(updatedProduct.getDescription());
+        existingProduct.setPrice(updatedProduct.getPrice());
+
+        // If an image is provided, update the image fields
+        if (imageFile != null && !imageFile.isEmpty()) {
+            existingProduct.setImageData(imageFile.getBytes());
+            existingProduct.setImageType(imageFile.getContentType());
+        }
+
+        // Save and return the updated product
+        return productRepository.save(existingProduct);
     }
 
     public void deleteProduct(int prodId) {
-        Optional<Product> product = productRepository.findById(prodId);
-        if (product.isPresent()) {
-            productRepository.delete(product.get());
-        } else {
-            throw new ProductNotFoundException("Product with ID " + prodId + " not found.");
-        }
+        Product product = productRepository.findById(prodId)
+                .orElseThrow(() -> new ProductNotFoundException(prodId));
+        productRepository.delete(product);
     }
 
     public List<Product> searchProducts(String keyword) {

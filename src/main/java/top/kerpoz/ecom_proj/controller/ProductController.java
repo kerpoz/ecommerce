@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import top.kerpoz.ecom_proj.exception.ProductNotFoundException;
 import top.kerpoz.ecom_proj.model.Product;
 import top.kerpoz.ecom_proj.service.ProductService;
 
@@ -31,10 +30,8 @@ public class ProductController {
 
     @GetMapping("/product/{prodId}")
     public ResponseEntity<Product> getProduct(@PathVariable int prodId) {
-        Optional<Product> product = productService.getProduct(prodId);
-        return productService.getProduct(prodId)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        Product product = productService.getProduct(prodId);
+        return ResponseEntity.ok(product);
     }
 
     @PostMapping(path = "/product", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -50,8 +47,8 @@ public class ProductController {
 
     @GetMapping("/product/{prodId}/image")
     public ResponseEntity<byte[]> getProductImage(@PathVariable int prodId) {
-        Optional<Product> product = productService.getProduct(prodId);
-        return product.map(value -> ResponseEntity.ok(value.getImageDate()))
+        Optional<Product> product = Optional.ofNullable(productService.getProduct(prodId));
+        return product.map(value -> ResponseEntity.ok(value.getImageData()))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
@@ -68,14 +65,8 @@ public class ProductController {
 
     @DeleteMapping("/product/{prodId}")
     public ResponseEntity<String> deleteProduct(@PathVariable int prodId) {
-        try {
             productService.deleteProduct(prodId);
             return ResponseEntity.ok("Product deleted successfully.");
-        } catch (ProductNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred.");
-        }
     }
 
     @GetMapping("/products/search")

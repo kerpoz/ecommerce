@@ -1,4 +1,4 @@
-INSERT INTO product (name, description, price, category, release_date, product_available, stock_quantity, brand, image_name, image_type, image_date)
+INSERT INTO product (name, description, price, category, release_date, product_available, stock_quantity, brand, image_name, image_type, image_data)
 VALUES
 -- Vehicles
 ('Suzuki Swift', 'A compact and fuel-efficient hatchback with a 1.2L engine and modern safety features.', 15250.00, 'Vehicles', '2025-01-15', true, 12, 'Suzuki', 'suzuki_swift.jpg', 'image/jpeg', NULL),
