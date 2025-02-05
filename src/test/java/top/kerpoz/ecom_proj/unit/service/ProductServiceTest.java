@@ -208,4 +208,46 @@ class ProductServiceTest {
 
         verify(mockProductRepository).searchProducts(eq("keyword"));
     }
+
+    @Test
+    @DisplayName("Should update an existing product without changing the image")
+    void shouldUpdateExistingProductWithoutChangingImage() throws IOException {
+        // Arrange: Mock existing product in repository
+        Product existingProduct = createSampleProduct(1);
+        when(mockProductRepository.findById(1)).thenReturn(Optional.of(existingProduct));
+
+        Product updatedProduct = createSampleProduct(1);
+        updatedProduct.setName("Updated Name");
+
+        // Ensure save() returns the updated product
+        when(mockProductRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act: Call update method without an image file
+        Product result = productServiceUnderTest.updateProduct(1, updatedProduct, new MockMultipartFile("noImageDataBecauseOf0", new byte[0]));
+
+        // Assert: Verify repository interactions and updated values
+        verify(mockProductRepository).findById(eq(1));
+        verify(mockProductRepository).save(any(Product.class));
+        assertThat(result).isNotNull(); // Ensure result is not null
+        assertThat(result.getName()).isEqualTo("Updated Name");
+        assertThat(result.getImageData()).isEqualTo(existingProduct.getImageData());
+    }
+
+    @Test
+    @DisplayName("Should add a new product with null image")
+    void shouldAddNewProductWithNullImage() throws IOException {
+        // Arrange
+        Product inputProduct = createSampleProduct(0);
+        inputProduct.setImageData(null);
+
+        when(mockProductRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        Product result = productServiceUnderTest.addProduct(inputProduct, null);
+
+        // Assert
+        verify(mockProductRepository).save(any(Product.class));
+        assertThat(result.getName()).isEqualTo(inputProduct.getName());
+        assertThat(result.getImageData()).isNull();
+    }
 }
