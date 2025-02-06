@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import top.kerpoz.ecom_proj.exception.ProductNotFoundException;
-import top.kerpoz.ecom_proj.model.Product;
+import top.kerpoz.ecom_proj.model.entity.Product;
 import top.kerpoz.ecom_proj.repository.ProductRepository;
 import top.kerpoz.ecom_proj.service.ProductService;
 
@@ -68,7 +68,7 @@ class ProductServiceTest {
         // Assert
         verify(mockProductRepository).findAll();
         assertThat(result).isNotEmpty();
-        assertThat(result.get(0).getName()).isEqualTo("Sample Product");
+        assertThat(result.getFirst().getName()).isEqualTo("Sample Product");
     }
 
     @Test

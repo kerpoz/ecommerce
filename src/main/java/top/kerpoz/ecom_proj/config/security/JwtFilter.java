@@ -1,4 +1,4 @@
-package top.kerpoz.ecom_proj.config.security.filter;
+package top.kerpoz.ecom_proj.config.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

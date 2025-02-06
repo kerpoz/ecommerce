@@ -1,4 +1,4 @@
-package top.kerpoz.ecom_proj.model;
+package top.kerpoz.ecom_proj.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

@@ -3,7 +3,7 @@ package top.kerpoz.ecom_proj.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.kerpoz.ecom_proj.exception.ProductNotFoundException;
-import top.kerpoz.ecom_proj.model.Product;
+import top.kerpoz.ecom_proj.model.entity.Product;
 import top.kerpoz.ecom_proj.repository.ProductRepository;
 
 import java.io.IOException;

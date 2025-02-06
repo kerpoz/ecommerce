@@ -1,4 +1,4 @@
-package top.kerpoz.ecom_proj.model;
+package top.kerpoz.ecom_proj.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

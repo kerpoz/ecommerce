@@ -6,7 +6,7 @@ import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import top.kerpoz.ecom_proj.model.UserEntity;
+import top.kerpoz.ecom_proj.model.entity.UserEntity;
 
 import java.util.Set;
 
@@ -119,6 +119,7 @@ class UserEntityTest {
         // Assert
         assertThat(violations).isEmpty();
     }
+
     @Test
     @DisplayName("Should pass validation when email is empty")
     void shouldPassValidationWhenEmailIsNull() {
