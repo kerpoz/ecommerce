@@ -21,8 +21,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -234,20 +233,39 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Should add a new product with null image")
+    @DisplayName("Should successfully add a new product when image-related fields are null")
     void shouldAddNewProductWithNullImage() throws IOException {
         // Arrange
         Product inputProduct = createSampleProduct(0);
         inputProduct.setImageData(null);
+        inputProduct.setImageType(null);
+        inputProduct.setImageName(null);
 
-        when(mockProductRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(mockProductRepository.save(any(Product.class)))
+                .thenAnswer(invocation -> {
+                    Product savedProduct = invocation.getArgument(0);
+                    // Verify that image-related fields remain null during save
+                    assertThat(savedProduct.getImageData()).isNull();
+                    assertThat(savedProduct.getImageType()).isNull();
+                    assertThat(savedProduct.getImageName()).isNull();
+                    return savedProduct;
+                });
 
         // Act
         Product result = productServiceUnderTest.addProduct(inputProduct, null);
 
         // Assert
-        verify(mockProductRepository).save(any(Product.class));
+        verify(mockProductRepository).save(argThat(product -> {
+            return product.getImageData() == null &&
+                    product.getImageType() == null &&
+                    product.getImageName() == null;
+        }));
+
+        // Verify other product fields are set correctly
+        assertThat(result).isNotNull();
         assertThat(result.getName()).isEqualTo(inputProduct.getName());
         assertThat(result.getImageData()).isNull();
+        assertThat(result.getImageType()).isNull();
+        assertThat(result.getImageName()).isNull();
     }
 }

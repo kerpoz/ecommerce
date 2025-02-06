@@ -35,14 +35,14 @@ public class DataInitializer {
         List<RoleType> roles = Arrays.asList(RoleType.ROLE_USER, RoleType.ROLE_ADMIN);
 
         for (RoleType roleType : roles) {
-            if (!roleRepository.findByName(roleType.name()).isPresent()) {
+            if (roleRepository.findByName(roleType.name()).isEmpty()) {
                 Role role = new Role();
                 role.setName(roleType.name());
                 roleRepository.save(role);
             }
         }
 
-        if (!userEntityRepository.findByUsername("admin").isPresent()) {
+        if (userEntityRepository.findByUsername("admin").isEmpty()) {
             UserEntity adminUser = new UserEntity();
             adminUser.setUsername("admin");
             adminUser.setPassword(passwordEncoder.encode("adminPassword"));
@@ -53,7 +53,7 @@ public class DataInitializer {
             userEntityRepository.save(adminUser);
         }
 
-        if (!userEntityRepository.findByUsername("user").isPresent()) {
+        if (userEntityRepository.findByUsername("user").isEmpty()) {
             UserEntity normalUser = new UserEntity();
             normalUser.setUsername("testUsername");
             normalUser.setPassword(passwordEncoder.encode("testPassword"));

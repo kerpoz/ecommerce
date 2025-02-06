@@ -1,4 +1,4 @@
-package top.kerpoz.ecom_proj.unit.model;
+package top.kerpoz.ecom_proj.unit.model.entity;
 
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

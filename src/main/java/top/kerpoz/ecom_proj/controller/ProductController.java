@@ -35,9 +35,9 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
+    //TODO Swagger(Spring Doc) creates wrong request for addProduct, it cause "Content-Type 'application/octet-stream' is not supported", in request "imageFile" should have Content-Type "multipart/form-data", and "product" "application/application/json"
     @PostMapping(path = "/product", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> addProduct(@RequestPart Product product,
-                                        @RequestPart MultipartFile imageFile) {
+    public ResponseEntity<?> addProduct(@RequestPart Product product, MultipartFile imageFile) {
         try {
             Product newProduct = productService.addProduct(product, imageFile);
             return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
@@ -53,9 +53,9 @@ public class ProductController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-
+    //TODO Swagger(Spring Doc) creates wrong request for updateProduct, it cause "Content-Type 'application/octet-stream' is not supported", in request "imageFile" should have Content-Type "multipart/form-data", and "product" "application/application/json"
     @PutMapping(path = "/product/{prodId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> updateProduct(@PathVariable int prodId, @RequestPart Product product, @RequestPart MultipartFile imageFile) {
+    public ResponseEntity<String> updateProduct(@PathVariable int prodId, @RequestPart Product product, MultipartFile imageFile) {
         try {
             Product updatedProduct = productService.updateProduct(prodId, product, imageFile);
             return updatedProduct != null ? new ResponseEntity<>("updated", HttpStatus.OK) : new ResponseEntity<>("failed to update", HttpStatus.BAD_REQUEST);
