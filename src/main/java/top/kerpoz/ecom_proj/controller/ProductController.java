@@ -3,9 +3,10 @@ package top.kerpoz.ecom_proj.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import top.kerpoz.ecom_proj.model.Product;
+import top.kerpoz.ecom_proj.model.entity.Product;
 import top.kerpoz.ecom_proj.service.ProductService;
 
 import java.io.IOException;
@@ -63,10 +64,11 @@ public class ProductController {
         }
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/product/{prodId}")
     public ResponseEntity<String> deleteProduct(@PathVariable int prodId) {
-            productService.deleteProduct(prodId);
-            return ResponseEntity.ok("Product deleted successfully.");
+        productService.deleteProduct(prodId);
+        return ResponseEntity.ok("Product deleted successfully.");
     }
 
     @GetMapping("/products/search")

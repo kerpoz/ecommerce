@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import top.kerpoz.ecom_proj.config.security.UserPrincipal;
-import top.kerpoz.ecom_proj.model.UserEntity;
+import top.kerpoz.ecom_proj.model.entity.UserEntity;
 import top.kerpoz.ecom_proj.repository.UserEntityRepository;
 
 @Service

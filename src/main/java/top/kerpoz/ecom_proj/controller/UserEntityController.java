@@ -2,7 +2,7 @@ package top.kerpoz.ecom_proj.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import top.kerpoz.ecom_proj.model.UserEntity;
+import top.kerpoz.ecom_proj.model.entity.UserEntity;
 import top.kerpoz.ecom_proj.service.UserEntityService;
 
 import java.util.Optional;
