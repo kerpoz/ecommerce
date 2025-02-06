@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import top.kerpoz.ecom_proj.exception.ImageNotFoundException;
 import top.kerpoz.ecom_proj.model.entity.Product;
 import top.kerpoz.ecom_proj.service.ProductService;
 
@@ -49,8 +50,13 @@ public class ProductController {
     @GetMapping("/product/{prodId}/image")
     public ResponseEntity<byte[]> getProductImage(@PathVariable int prodId) {
         Optional<Product> product = Optional.ofNullable(productService.getProduct(prodId));
-        return product.map(value -> ResponseEntity.ok(value.getImageData()))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        return product.map(value -> {
+            byte[] imageData = value.getImageData();
+            if (imageData == null || imageData.length == 0) {
+                throw new ImageNotFoundException(prodId);
+            }
+            return ResponseEntity.ok(imageData);
+        }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     //TODO Swagger(Spring Doc) creates wrong request for updateProduct, it cause "Content-Type 'application/octet-stream' is not supported", in request "imageFile" should have Content-Type "multipart/form-data", and "product" "application/application/json"

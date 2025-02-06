@@ -47,6 +47,13 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
+    @ExceptionHandler(ImageNotFoundException.class)
+    public ResponseEntity<String> handleImageNotFound(ImageNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//                .body(Map.of("error", e.getMessage(), "message", "Resource might not exist"));
+                .body(e.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationException(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
