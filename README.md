@@ -238,3 +238,10 @@ mvn test
 **Konrad Cieślak**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://linkedin.com/in/konrad-cie%C5%9Blak-283335193)
+
+[![Email](https://img.shields.io/badge/Email-Contact%20Me-red)](mailto:konrad.cieslak.kerpoz@gmail.com)
+
+[![GitHub](https://img.shields.io/badge/GitHub-Follow%20Me-black)](https://github.com/kerpoz)
+
+
+[![Google Play](https://img.shields.io/badge/Google%20Play-Developer%20Page-green)](https://play.google.com/store/apps/developer?id=kerpoz)
