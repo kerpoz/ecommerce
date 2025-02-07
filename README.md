@@ -237,11 +237,7 @@ mvn test
 ## Author
 **Konrad Cieślak**
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue)](https://linkedin.com/in/konrad-cie%C5%9Blak-283335193)
-
-[![Email](https://img.shields.io/badge/Email-Contact%20Me-red)](mailto:konrad.cieslak.kerpoz@gmail.com)
-
-[![GitHub](https://img.shields.io/badge/GitHub-Follow%20Me-black)](https://github.com/kerpoz)
-
-
-[![Google Play](https://img.shields.io/badge/Google%20Play-Developer%20Page-green)](https://play.google.com/store/apps/developer?id=kerpoz)
+[![GitHub](https://img.shields.io/badge/GitHub-%23181717.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/kerpoz) &nbsp;
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230A66C2.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/konrad-cieślak-283335193) &nbsp;
+[![Google Play Developer](https://img.shields.io/badge/Google%20Play-%23234F34.svg?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/developer?id=kerpoz) &nbsp;
+[![Email](https://img.shields.io/badge/Email-%23D14836.svg?style=for-the-badge&logo=gmail&logoColor=white)](mailto:konrad.cieslak.kerpoz@gmail.com)   
